@@ -1,0 +1,35 @@
+version: '3.8'
+services:
+  app:
+    build: .
+    ports:
+      - '${PORT}:3000'
+    environment:
+      DB_USER: ${DB_USER}
+      DB_PASS: ${DB_PASS}
+      DB_HOST: mysql
+      DB_PORT: ${DB_PORT}
+    depends_on:
+      - mysql
+      - mongo
+
+  mysql:
+    image: mysql:latest
+    environment:
+      MYSQL_ROOT_PASSWORD: ${DB_PASS}
+      MYSQL_DATABASE: mydb
+      MYSQL_USER: ${DB_USER}
+    ports:
+      - '${DB_PORT}:3306'
+    volumes:
+      - mysql-data:/var/lib/mysql
+
+  mongo:
+    image: mongo:latest
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: mongoadmin
+      MONGO_INITDB_ROOT_PASSWORD: secret
+    ports:
+      - '27017:27017'
+    volumes:
+      - mongo

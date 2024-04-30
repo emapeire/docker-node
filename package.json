@@ -1,11 +1,11 @@
 {
   "name": "docker-project",
   "version": "1.0.0",
-  "description": "",
+  "description": "A simple project to demonstrate how to use Docker with Node.js and MySQL.",
   "main": "./src/server/index.js",
   "type": "module",
   "scripts": {
-    "dev": "nodemon --watch ./src/server/index.js",
+    "dev": "nodemon ./src/server/index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [
