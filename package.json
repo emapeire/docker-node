@@ -1,5 +1,5 @@
 {
-  "name": "docker-project",
+  "name": "node-docker",
   "version": "1.0.0",
   "description": "A simple project to demonstrate how to use Docker with Node.js and MySQL.",
   "main": "./src/server/index.js",

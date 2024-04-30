@@ -3,6 +3,7 @@ import mysql from 'mysql2/promise'
 import mongoose from 'mongoose'
 import { config } from '../config/index.js'
 
+// Destructure the config object
 const { mysqlConfig, serverConfig } = config
 
 // Create an express app
@@ -24,10 +25,12 @@ console.log(response)
 const mongo = await mongoose.connect('mongodb://localhost:27017/dockerdb')
 console.log('MongoDB connected', mongo.connection.db.databaseName)
 
+// Create a simple route
 app.get('/', (_req, res) => {
   res.send('Hello, world!')
 })
 
+// Start the server
 app.listen(serverConfig.port, () => {
   console.log(`Server is running on http://localhost:${serverConfig.port}`)
 })
