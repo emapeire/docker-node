@@ -2,10 +2,6 @@
 
 ## A simple Node.js project with Docker
 
-### Setting up the project
-
-You'll need to set the environment variables in the `.env` file. You can use the [`.env.example`](.env.example) file as a template.
-
 ### Running the project
 
 To run the project, you'll need to have Docker installed. Then, you can run the following command:
