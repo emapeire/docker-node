@@ -1,6 +1,5 @@
 services:
   app:
-    image: node:20
     build: .
     ports:
       - '3000:3000'
