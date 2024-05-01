@@ -1,4 +1,4 @@
-# Node-Docker 🐳
+# Docker Node 🐳
 
 ## A simple Node.js project with Docker
 
