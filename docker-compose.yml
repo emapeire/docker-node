@@ -8,6 +8,7 @@ services:
     command: npm run dev
     depends_on:
       - mongo
+      - mysql
     networks:
       - app-network
 
@@ -17,6 +18,18 @@ services:
     restart: always
     ports:
       - '27017:27017'
+    networks:
+      - app-network
+
+  mysql:
+    image: mysql
+    container_name: docker-mysql
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: pass
+      MYSQL_DATABASE: test
+    ports:
+      - '3306:3306'
     networks:
       - app-network
 

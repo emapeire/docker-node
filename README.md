@@ -1,6 +1,6 @@
 # Docker Node 🐳
 
-## A simple Node.js project with Docker and MongoDB
+## A simple Node.js project with Docker, MongoDB and MySQL
 
 ### Running the project
 
