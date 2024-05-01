@@ -5,3 +5,8 @@ services:
       - '3000:3000'
     container_name: docker-node
     command: npm run dev
+  mongo:
+    image: mongo
+    container_name: docker-mongo
+    ports:
+      - '27017:27017'

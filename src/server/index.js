@@ -1,13 +1,8 @@
 import express from 'express'
-import mysql from 'mysql2/promise'
+// import mysql from 'mysql2/promise'
 import mongoose from 'mongoose'
 import { v4 } from 'uuid'
-import { config } from '../config/index.js'
 
-// Destructure the config object
-const { mysqlConfig, mongoConfig, serverConfig } = config
-
-// Create an express app
 const app = express()
 
 // Connect to MySQL
@@ -23,17 +18,31 @@ const app = express()
 // console.log(response)
 
 // Connect to MongoDB
-// const mongo = await mongoose.connect(mongoConfig.uri)
-// console.log('MongoDB connected:', mongo.connection.db.databaseName)
+const mongo = await mongoose.connect('mongodb://docker-mongo:27017/test')
+console.log('MongoDB connected:', mongo.connection.db.databaseName)
 
-// Define a route and send a response with a unique id
-app.get('/', (_req, res) => {
+// Define a schema
+const ProductSchema = new mongoose.Schema({
+  name: String,
+  price: Number
+})
+
+// Compile the model
+const ProductModel = mongoose.model('Product', ProductSchema)
+
+// Define the server configuration
+app.get('/', async (_req, res) => {
+  const newProduct = await ProductModel.create({
+    name: 'Product 1',
+    price: 100
+  })
   res.json({
-    id: v4()
+    id: v4(),
+    newProduct
   })
 })
 
 // Start the server
-app.listen(serverConfig.port, () => {
-  console.log(`Server is running on http://localhost:${serverConfig.port}`)
+app.listen(3000, () => {
+  console.log('Server is running on http://localhost:3000')
 })
