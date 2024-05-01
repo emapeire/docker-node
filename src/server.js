@@ -15,10 +15,15 @@ async function server() {
   )
 
   // Define a schema
-  const productSchema = new mongoose.Schema({
-    name: String,
-    price: Number
-  })
+  const productSchema = new mongoose.Schema(
+    {
+      name: { type: String, unique: true }, // Ensure name is unique
+      price: Number
+    },
+    {
+      timestamps: true // Add timestamps to each document
+    }
+  )
 
   // Define a model
   const productModel = mongoose.model('Product', productSchema)
@@ -35,12 +40,12 @@ async function server() {
 
   // Create a table if not exists
   await mysql.query(`
-        CREATE TABLE IF NOT EXISTS products (
-            id INT AUTO_INCREMENT PRIMARY KEY,
-            name VARCHAR(255) NOT NULL,
-            price INT NOT NULL
-        )
-    `)
+    CREATE TABLE IF NOT EXISTS products (
+        id INT AUTO_INCREMENT PRIMARY KEY,
+        name VARCHAR(255) NOT NULL,
+        price INT NOT NULL
+    )
+  `)
 
   // Define the server configuration
   app.get('/', async (_req, res) => {
@@ -55,32 +60,33 @@ async function server() {
       console.log('Duplicates detected and table truncated')
     }
 
-    // Insert a new product (if required, use the conditional insertion logic here)
+    // Insert a new product into MySQL if it does not exist
     await mysql.query(
       `
-            INSERT INTO products (name, price)
-            SELECT * FROM (SELECT ? AS name, ? AS price) AS tmp
-            WHERE NOT EXISTS (
-                SELECT name FROM products WHERE name = ? AND price = ?
-            ) LIMIT 1;
-            `,
+      INSERT INTO products (name, price)
+      SELECT * FROM (SELECT ? AS name, ? AS price) AS tmp
+      WHERE NOT EXISTS (
+          SELECT name FROM products WHERE name = ? AND price = ?
+      ) LIMIT 1;
+      `,
       ['Product 2', 200, 'Product 2', 200]
     )
 
-    // Insert a new product using Mongoose
-    const newProduct = await productModel.create({
-      name: 'Product 1',
-      price: 100
-    })
+    // Insert a new product into MongoDB using an upsert to avoid duplicates
+    const mongodbProducts = await productModel.findOneAndUpdate(
+      { name: 'Product 1', price: 100 },
+      { $setOnInsert: { name: 'Product 1', price: 100 } },
+      { upsert: true, new: true, setDefaultsOnInsert: true }
+    )
 
     // Select all products from MySQL
-    const [rows] = await mysql.query('SELECT * FROM products')
+    const [mysqlProducts] = await mysql.query('SELECT * FROM products')
 
-    // Fetch all products from both databases
+    // Return products from both databases
     res.json({
       id: v4(),
-      mongodbProducts: newProduct,
-      mysqlProducts: rows
+      mongodbProducts,
+      mysqlProducts
     })
   })
 
