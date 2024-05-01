@@ -2,10 +2,10 @@
   "name": "docker-node",
   "version": "1.0.0",
   "description": "A simple project to demonstrate how to use Docker with Node.js and MySQL.",
-  "main": "./src/server/index.js",
+  "main": "./src/server.js",
   "type": "module",
   "scripts": {
-    "dev": "nodemon ./src/server/index.js",
+    "dev": "nodemon ./src/server.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [
