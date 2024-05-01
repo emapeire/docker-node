@@ -1,6 +1,7 @@
 import express from 'express'
-import mysql from 'mysql2/promise'
-import mongoose from 'mongoose'
+import { v4 } from 'uuid'
+// import mysql from 'mysql2/promise'
+// import mongoose from 'mongoose'
 import { config } from '../config/index.js'
 
 // Destructure the config object
@@ -10,24 +11,26 @@ const { mysqlConfig, serverConfig } = config
 const app = express()
 
 // Connect to MySQL
-const client = mysql.createPool({
-  host: mysqlConfig.host,
-  port: mysqlConfig.port,
-  user: mysqlConfig.user,
-  password: mysqlConfig.password
-})
+// const client = mysql.createPool({
+//   host: mysqlConfig.host,
+//   port: mysqlConfig.port,
+//   user: mysqlConfig.user,
+//   password: mysqlConfig.password
+// })
 
 // A simple query to test the connection
-const response = await client.query('SHOW DATABASES')
-console.log(response)
+// const response = await client.query('SHOW DATABASES')
+// console.log(response)
 
 // Connect to MongoDB
-const mongo = await mongoose.connect('mongodb://localhost:27017/dockerdb')
-console.log('MongoDB connected', mongo.connection.db.databaseName)
+// const mongo = await mongoose.connect('mongodb://localhost:27017/dockerdb')
+// console.log('MongoDB connected', mongo.connection.db.databaseName)
 
 // Create a simple route
 app.get('/', (_req, res) => {
-  res.send('Hello, world!')
+  res.json({
+    id: v4()
+  })
 })
 
 // Start the server
