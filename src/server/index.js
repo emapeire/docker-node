@@ -1,11 +1,11 @@
 import express from 'express'
+import mysql from 'mysql2/promise'
+import mongoose from 'mongoose'
 import { v4 } from 'uuid'
-// import mysql from 'mysql2/promise'
-// import mongoose from 'mongoose'
 import { config } from '../config/index.js'
 
 // Destructure the config object
-const { mysqlConfig, serverConfig } = config
+const { mysqlConfig, mongoConfig, serverConfig } = config
 
 // Create an express app
 const app = express()
@@ -23,10 +23,10 @@ const app = express()
 // console.log(response)
 
 // Connect to MongoDB
-// const mongo = await mongoose.connect('mongodb://localhost:27017/dockerdb')
-// console.log('MongoDB connected', mongo.connection.db.databaseName)
+// const mongo = await mongoose.connect(mongoConfig.uri)
+// console.log('MongoDB connected:', mongo.connection.db.databaseName)
 
-// Create a simple route
+// Define a route and send a response with a unique id
 app.get('/', (_req, res) => {
   res.json({
     id: v4()
