@@ -4,9 +4,22 @@ services:
     ports:
       - '3000:3000'
     container_name: docker-node
+    restart: always
     command: npm run dev
+    depends_on:
+      - mongo
+    networks:
+      - app-network
+
   mongo:
     image: mongo
     container_name: docker-mongo
+    restart: always
     ports:
       - '27017:27017'
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge

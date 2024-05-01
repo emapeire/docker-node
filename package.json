@@ -1,7 +1,7 @@
 {
   "name": "docker-node",
   "version": "1.0.0",
-  "description": "A simple project to demonstrate how to use Docker with Node.js and MySQL.",
+  "description": "A simple project to demonstrate how to use Docker with Node.js and MongoDB.",
   "main": "./src/server.js",
   "type": "module",
   "scripts": {
@@ -12,7 +12,6 @@
     "nodejs",
     "docker",
     "express",
-    "mysql2",
     "mongoose",
     "dotenv"
   ],
@@ -22,7 +21,6 @@
     "dotenv": "^16.4.5",
     "express": "^4.19.2",
     "mongoose": "^8.3.3",
-    "mysql2": "^3.9.7",
     "uuid": "^9.0.1"
   },
   "devDependencies": {
