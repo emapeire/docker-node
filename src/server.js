@@ -3,9 +3,9 @@ import { v4 } from 'uuid'
 import { connectMongo } from './mongo.js'
 import { connectMySQL } from './mysql.js'
 
-const app = express()
-
 async function server() {
+  const app = express()
+
   const { mongoProduct } = await connectMongo()
   const { mysqlProduct } = await connectMySQL()
 

@@ -14,8 +14,7 @@ export const connectMongo = async () => {
     price: Number
   })
 
-  const productModel =
-    mongoose.models.Product || mongoose.model('Product', productSchema)
+  const productModel = mongoose.model('Product', productSchema)
 
   await productModel.deleteMany({})
 
