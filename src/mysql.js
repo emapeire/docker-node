@@ -2,7 +2,7 @@ import { createPool } from 'mysql2/promise'
 
 export const connectMySQL = async () => {
   const mysql = createPool({
-    host: 'localhost' ?? 'docker-mysql',
+    host: 'localhost',
     user: 'root',
     password: 'pass',
     port: 3306,
