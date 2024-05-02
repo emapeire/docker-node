@@ -1,4 +1,4 @@
-# Docker Node 🐳
+# Docker Node 🐳: learning best practices
 
 ## A simple Node.js project with Docker, MongoDB and MySQL
 
