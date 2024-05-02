@@ -18,6 +18,7 @@ async function server() {
       mongoProduct,
       mysqlProduct
     })
+    console.log('✅ Server responded')
   })
 
   app.listen(serverConfig.port, () => {

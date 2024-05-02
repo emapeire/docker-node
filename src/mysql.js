@@ -14,6 +14,7 @@ export const connectMySQL = async () => {
   console.log('✅ MySQL connected')
 
   await mysql.query(`DROP TABLE IF EXISTS products`)
+  console.log('✅ MySQL: Table dropped')
 
   await mysql.query(
     `CREATE TABLE IF NOT EXISTS products (
@@ -22,13 +23,16 @@ export const connectMySQL = async () => {
       price INT NOT NULL
     )`
   )
+  console.log('✅ MySQL: Table created')
 
   await mysql.query(`INSERT INTO products (name, price) VALUES (?, ?)`, [
     'Product 2',
     200
   ])
+  console.log('✅ MySQL: Product inserted')
 
   const [mysqlProduct] = await mysql.query('SELECT * FROM products')
+  console.log('✅ MySQL: Product selected')
 
   return { mysqlProduct }
 }
