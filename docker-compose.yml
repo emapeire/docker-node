@@ -9,8 +9,10 @@ services:
     restart: always
     command: npm run dev
     depends_on:
-      - mongo
-      - mysql
+      mongo:
+        condition: service_healthy
+      mysql:
+        condition: service_healthy
     networks:
       - app-network
 
@@ -24,6 +26,12 @@ services:
     restart: always
     networks:
       - app-network
+    healthcheck:
+      test: ['CMD', 'mongosh', '--eval', "db.adminCommand('ping').ok"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 30s
 
   mysql:
     image: mysql
@@ -38,6 +46,12 @@ services:
       MYSQL_DATABASE: $MYSQL_DATABASE
     networks:
       - app-network
+    healthcheck:
+      test: ['CMD', 'mysqladmin', 'ping', '-h', 'mysql']
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 30s
 
 networks:
   app-network:
