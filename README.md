@@ -1,6 +1,8 @@
 # Docker Node 🐳: learning best practices
 
-## A simple Node.js project with Docker, MongoDB and MySQL
+### About the project
+
+A simple Node.js project with Docker, MongoDB and MySQL
 
 ### Setting up the project
 
