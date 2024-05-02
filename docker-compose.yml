@@ -3,6 +3,8 @@ services:
     build: .
     ports:
       - '3000:3000'
+    env_file:
+      - .env
     container_name: docker-node
     restart: always
     command: npm run dev
@@ -14,22 +16,26 @@ services:
 
   mongo:
     image: mongo
-    container_name: docker-mongo
-    restart: always
     ports:
       - '27017:27017'
+    env_file:
+      - .env
+    container_name: $MONGO_HOST
+    restart: always
     networks:
       - app-network
 
   mysql:
     image: mysql
-    container_name: docker-mysql
-    restart: always
-    environment:
-      MYSQL_ROOT_PASSWORD: pass
-      MYSQL_DATABASE: test
     ports:
       - '3306:3306'
+    env_file:
+      - .env
+    container_name: $MYSQL_HOST
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: $MYSQL_ROOT_PASSWORD
+      MYSQL_DATABASE: test
     networks:
       - app-network
 

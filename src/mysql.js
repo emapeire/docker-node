@@ -1,8 +1,11 @@
 import { createPool } from 'mysql2/promise'
+import { config } from './config/index.js'
 
 export const connectMySQL = async () => {
+  const { mysqlConfig } = config
+
   const mysql = createPool({
-    host: 'localhost',
+    host: mysqlConfig.host,
     user: 'root',
     password: 'pass',
     port: 3306,

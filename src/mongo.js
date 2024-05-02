@@ -1,7 +1,12 @@
 import mongoose from 'mongoose'
+import { config } from './config/index.js'
 
 export const connectMongo = async () => {
-  const mongo = await mongoose.connect('mongodb://localhost:27017/test')
+  const { mongoConfig } = config
+
+  const mongo = await mongoose.connect(
+    `mongodb://${mongoConfig.host}:27017/test`
+  )
   console.log(
     '✅ MongoDB connected, database:',
     mongo.connection.db.databaseName
