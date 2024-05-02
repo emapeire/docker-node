@@ -16,17 +16,14 @@ export const connectMySQL = async () => {
     `CREATE TABLE IF NOT EXISTS products (
       id INT AUTO_INCREMENT PRIMARY KEY,
       name VARCHAR(255) NOT NULL,
-      price INT NOT NULL,
-      UNIQUE INDEX idx_name_price (name, price)
+      price INT NOT NULL
     )`
   )
 
-  await mysql.query(
-    `INSERT INTO products (name, price)
-    VALUES (?, ?)
-    ON DUPLICATE KEY UPDATE id = id;`,
-    ['Product 2', 200]
-  )
+  await mysql.query(`INSERT INTO products (name, price) VALUES (?, ?)`, [
+    'Product 2',
+    200
+  ])
 
   const [mysqlProduct] = await mysql.query('SELECT * FROM products')
 
