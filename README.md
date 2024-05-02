@@ -1,4 +1,4 @@
-# Docker Node 🐳: learning best practices
+# Docker Node 🐳: learn best practices
 
 ### About the project
 
