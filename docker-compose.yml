@@ -7,7 +7,7 @@ services:
       - $APP_PORT:$APP_PORT
     container_name: $APP_CONTAINER_NAME
     restart: always
-    command: npm run dev
+    command: npm run start
     depends_on:
       mongo:
         condition: service_healthy
