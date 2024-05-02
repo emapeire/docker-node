@@ -37,6 +37,12 @@ To run the project, you'll need to have Docker installed. Then, you can run the 
 docker-compose up
 ```
 
+For building the project, you can run the following command:
+
+```bash
+docker-compose up --build
+```
+
 This will build the Docker image and start the container. You can access the application at `http://localhost:3000`.
 
 ### Stopping the project
@@ -48,3 +54,7 @@ docker-compose down
 ```
 
 This will stop the container and remove it.
+
+### License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
