@@ -10,22 +10,21 @@ export const connectMySQL = async () => {
   })
   console.log('✅ MySQL connected')
 
-  await mysql.query(`
-    CREATE TABLE IF NOT EXISTS products (
+  await mysql.query(
+    `CREATE TABLE IF NOT EXISTS products (
       id INT AUTO_INCREMENT PRIMARY KEY,
       name VARCHAR(255) NOT NULL,
-      price INT NOT NULL,
-      UNIQUE KEY unique_index (name, price)
-    );
-  `)
+      price INT NOT NULL
+    )`
+  )
 
   await mysql.query(
-    `
-    INSERT INTO products (name, price)
-    VALUES (?, ?)
-    ON DUPLICATE KEY UPDATE id=id;
-    `,
-    ['Product 2', 200]
+    `INSERT INTO products (name, price)
+    SELECT * FROM (SELECT ? AS name, ? AS price) AS tmp
+    WHERE NOT EXISTS (
+      SELECT name FROM products WHERE name = ? AND price = ?
+    ) LIMIT 1;`,
+    ['Product 2', 200, 'Product 2', 200]
   )
 
   const [mysqlProduct] = await mysql.query('SELECT * FROM products')
