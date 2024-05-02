@@ -6,10 +6,10 @@ export const connectMySQL = async () => {
 
   const mysql = createPool({
     host: mysqlConfig.host,
-    user: 'root',
-    password: 'pass',
-    port: 3306,
-    database: 'test'
+    user: mysqlConfig.user,
+    password: mysqlConfig.password,
+    port: mysqlConfig.port,
+    database: mysqlConfig.database
   })
   console.log('✅ MySQL connected')
 

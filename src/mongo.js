@@ -5,7 +5,7 @@ export const connectMongo = async () => {
   const { mongoConfig } = config
 
   const mongo = await mongoose.connect(
-    `mongodb://${mongoConfig.host}:27017/test`
+    `mongodb://${mongoConfig.host}:${mongoConfig.port}/${mongoConfig.database}`
   )
   console.log(
     '✅ MongoDB connected, database:',

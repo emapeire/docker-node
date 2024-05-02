@@ -2,8 +2,11 @@ import express from 'express'
 import { v4 } from 'uuid'
 import { connectMongo } from './mongo.js'
 import { connectMySQL } from './mysql.js'
+import { config } from './config/index.js'
 
 async function server() {
+  const { serverConfig } = config
+
   const app = express()
 
   const { mongoProduct } = await connectMongo()
@@ -17,8 +20,8 @@ async function server() {
     })
   })
 
-  app.listen(3000, () => {
-    console.log('✅ Server is running on http://localhost:3000')
+  app.listen(serverConfig.port, () => {
+    console.log(`✅ Server is running on http://localhost:${serverConfig.port}`)
   })
 }
 

@@ -1,11 +1,11 @@
 services:
   app:
     build: .
-    ports:
-      - '3000:3000'
     env_file:
       - .env
-    container_name: docker-node
+    ports:
+      - $APP_PORT:$APP_PORT
+    container_name: $APP_CONTAINER_NAME
     restart: always
     command: npm run dev
     depends_on:
@@ -16,26 +16,26 @@ services:
 
   mongo:
     image: mongo
-    ports:
-      - '27017:27017'
     env_file:
       - .env
-    container_name: $MONGO_HOST
+    ports:
+      - $MONGO_PORT:$MONGO_PORT
+    container_name: $MONGO_CONTAINER_HOST
     restart: always
     networks:
       - app-network
 
   mysql:
     image: mysql
-    ports:
-      - '3306:3306'
     env_file:
       - .env
-    container_name: $MYSQL_HOST
+    ports:
+      - $MYSQL_PORT:$MYSQL_PORT
+    container_name: $MYSQL_CONTAINER_HOST
     restart: always
     environment:
       MYSQL_ROOT_PASSWORD: $MYSQL_ROOT_PASSWORD
-      MYSQL_DATABASE: test
+      MYSQL_DATABASE: $MYSQL_DATABASE
     networks:
       - app-network
 
