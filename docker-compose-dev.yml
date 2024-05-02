@@ -1,0 +1,70 @@
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    env_file:
+      - .env
+    ports:
+      - $APP_PORT:$APP_PORT
+    container_name: $APP_CONTAINER_NAME
+    restart: always
+    command: npm run start
+    depends_on:
+      mongo:
+        condition: service_healthy
+      mysql:
+        condition: service_healthy
+    networks:
+      - app-network
+    volumes:
+      - .:/home/app
+
+  mongo:
+    image: mongo
+    env_file:
+      - .env
+    ports:
+      - $MONGO_PORT:$MONGO_PORT
+    container_name: $MONGO_CONTAINER_HOST
+    restart: always
+    networks:
+      - app-network
+    volumes:
+      - mongo-data:/data/db
+    healthcheck:
+      test: ['CMD', 'mongosh', '--eval', "db.adminCommand('ping').ok"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 30s
+
+  mysql:
+    image: mysql
+    env_file:
+      - .env
+    ports:
+      - $MYSQL_PORT:$MYSQL_PORT
+    container_name: $MYSQL_CONTAINER_HOST
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: $MYSQL_ROOT_PASSWORD
+      MYSQL_DATABASE: $MYSQL_DATABASE
+    networks:
+      - app-network
+    volumes:
+      - mysql-data:/var/lib/mysql
+    healthcheck:
+      test: ['CMD', 'mysqladmin', 'ping', '-h', 'mysql']
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 30s
+
+networks:
+  app-network:
+    driver: bridge
+
+volumes:
+  mongo-data:
+  mysql-data:
